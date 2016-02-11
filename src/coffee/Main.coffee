@@ -68,8 +68,40 @@ class Main
 		@audioTexture = new AudioTexture(@binCount,1)
 
 		# MONKEY MONKEY
+
+		@lights = []
+		@colors = []
+		# phi = 1.18
+		# theta = 0
+		# for i in [0...10] by 1
+		# 	theta += (1 / 10)*Math.PI*2
+		@lights.push(new THREE.Vector3( 100, 100, 100 ))
+		@colors.push(new THREE.Vector3( 255, 0, 255 ))
+
+		@lights.push(new THREE.Vector3( -100, 100, 100 ))
+		@colors.push(new THREE.Vector3( 0, 255, 0 ))
+
+		@lights.push(new THREE.Vector3( 0, -100, 0 ))
+		@colors.push(new THREE.Vector3( 0, 0, 255 ))
+
+		@lights.push(new THREE.Vector3( 0, 100, 0 ))
+		@colors.push(new THREE.Vector3( 255, 0, 0 ))
+
+
+		# @uniforms = {
+		# 	opacity:    { type: "f", value: 1 }
+		# 	time:  	    { type: "f", value: 0 }
+		# 	# lights have 4 component : intensity, radius, theta, phi
+		# 	lights:		{ type: "v4v", value: @lights }
+		# 	sunIntensity:  { type: "f", value:1 }
+		# 	sunColor:	   { type: "v3", value:new THREE.Vector3(2,2,2) }
+		# 	skyColor:		{type: "v3", value:new THREE.Vector3(2,2,2) }
+		# }
+
 		@uniforms = {
 			time: 	   { type: "f", value: 0 }
+			lights:		{ type: "v3v", value: @lights }
+			colors:		{ type: "v3v", value: @colors }
 		}
 
 		@material = new THREE.ShaderMaterial( {
