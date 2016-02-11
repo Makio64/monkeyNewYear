@@ -9,6 +9,7 @@ Line 			= require('makio/3d/Line')
 AudioTexture 	= require('makio/3d/AudioTexture')
 VJ 				= require('makio/audio/VJ')
 
+
 class Main
 
 	# Entry point
@@ -124,6 +125,10 @@ class Main
 		# 	Stage3d.add(mesh)
 		# 	@lines.push(mesh)
 
+		# loader = new THREE.JSONLoader()
+		# loader.load "obj/Lucy100k_bin.js", ( geo, mats ) ->
+		# 	console.log geo, mats
+
 		# SPHERE MIDDLE
 		# material = new THREE.MeshBasicMaterial({color:0})
 		# mesh = new THREE.Mesh( new THREE.SphereGeometry(100,32,32), material )
@@ -153,20 +158,20 @@ class Main
 		# 	@waveData[i] = (@timeByteData[i]/256)
 		# if(@audioTexture)
 		# 	@audioTexture.update(@freqByteData)
-		for l in @lines
-			l.material.uniforms.lineWidth.value = 1+VJ.volume*80
-			l.material.uniforms.intensity.value += -l.material.uniforms.intensity.value*.1
-			l.scale.x += (1-l.scale.x)*.1
-			l.scale.y += (1-l.scale.y)*.1
-			l.scale.z += (1-l.scale.z)*.1
+		# for l in @lines
+		# 	l.material.uniforms.lineWidth.value = 1+VJ.volume*80
+		# 	l.material.uniforms.intensity.value += -l.material.uniforms.intensity.value*.1
+		# 	l.scale.x += (1-l.scale.x)*.1
+		# 	l.scale.y += (1-l.scale.y)*.1
+		# 	l.scale.z += (1-l.scale.z)*.1
 		return
 
 	onBeat:()=>
-		line = @lines[Math.floor(Math.random()*@lines.length)]
-		line.material.uniforms.intensity.value = 10100
-		line.scale.x = 2+Math.random()*5
-		line.scale.y = 2+Math.random()*5
-		line.scale.z = 2+Math.random()*5
+		# line = @lines[Math.floor(Math.random()*@lines.length)]
+		# line.material.uniforms.intensity.value = 10100
+		# line.scale.x = 2+Math.random()*5
+		# line.scale.y = 2+Math.random()*5
+		# line.scale.z = 2+Math.random()*5
 		@vignette.params.boost = 5
 		# Make one line thicker / light
 		return
