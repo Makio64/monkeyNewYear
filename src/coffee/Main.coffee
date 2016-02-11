@@ -18,6 +18,8 @@ class Main
 
 		@callback(.5)
 
+		@_idx = 0
+
 		# ---------------------------------------------------------------------- INIT
 
 		Stage3d.init({background:0x131011})
@@ -117,8 +119,7 @@ class Main
 		loader = new THREE.JSONLoader()
 		@instancieds = []
 		loader.load( "obj/suzanneHi.js", ( geo, mat ) =>
-				@monkeykey = new THREE.Mesh( geo, @material )
-				# Stage3d.add @monkeykey
+
 
 				for k in [0...10]
 					geometry = new THREE.InstancedBufferGeometry()
@@ -166,6 +167,10 @@ class Main
 					@instancieds.push(meshInstanced)
 					@frustumCulled = false
 
+				Stage3d.add @instancieds[Math.floor(Math.random()*@instancieds.length)]
+
+				@monkeykey = new THREE.Mesh( geo, material )
+				Stage3d.add @monkeykey
 
 				a.play()
 				VJ.init(@context)
@@ -189,10 +194,13 @@ class Main
 	update:(dt)=>
 		VJ.update(dt)
 		@vignette.params.boost += ((1 + VJ.volume*5)-@vignette.params.boost)*.22
-		for i in @instancieds
-			if i.parent
-				Stage3d.remove(i)
-		Stage3d.add @instancieds[Math.floor(Math.random()*@instancieds.length)]
+		if @_idx > 6
+			for i in @instancieds
+				if i.parent
+					Stage3d.remove(i)
+			Stage3d.add @instancieds[Math.floor(Math.random()*@instancieds.length)]
+			@_idx = 0
+		@_idx++
 		# @analyser.getByteFrequencyData(@freqByteData)
 		# @analyser.getByteTimeDomainData(@timeByteData)
 		return
