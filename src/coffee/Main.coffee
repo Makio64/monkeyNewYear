@@ -131,6 +131,17 @@ class Main
 				@monkeykey = new THREE.Mesh( geo, @material )
 				Stage3d.add @monkeykey
 
+				# @container1 = new THREE.Object3D()
+				# m = new THREE.Mesh( geo, @material )
+				# m.position.x = -100
+				# m.scale.multiplyScalar( .8 )
+				# @container1.add m
+				# m = new THREE.Mesh( geo, @material )
+				# m.position.x = 100
+				# m.scale.multiplyScalar( .8 )
+				# @container1.add m
+				# Stage3d.add @container1
+
 				for k in [0...10]
 					geometry = new THREE.InstancedBufferGeometry()
 					g = new THREE.BufferGeometry()
