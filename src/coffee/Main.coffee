@@ -356,6 +356,8 @@ class Main
 			colors:		{ type: "v3v", value: @colors }
 			# opacity:		{ type: "f", value: .4 }
 			opacity:		{ type: "f", value: .75}
+			orientationMode: { type: "f", value: 1}
+			normalMode:		{ type: "f", value: 1}
 		}
 
 		@material1= new THREE.RawShaderMaterial( {
@@ -377,6 +379,8 @@ class Main
 		@custom.shader.uniforms.mirrorX = if Math.random()<.1 then 1 else 0
 		# @custom.shader.uniforms.mirrorY = if Math.random()<.1 then 1 else 0
 		@custom.shader.uniforms.divide4.value = if Math.random()<.1 then 1 else 0
+		@uniformsMaterial1.normalMode.value = if Math.random()<.1 then 1 else 0
+		@uniformsMaterial1.orientationMode.value = if Math.random()>.1 then 1 else 0
 
 		Stage3d.setColorFromOption({background:0xFFFFFF*Math.random()})
 		Stage3d.control.radius = Stage3d.control._radius = Math.random()*500+200
