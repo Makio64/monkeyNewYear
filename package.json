@@ -35,8 +35,6 @@
 		"webpack": "*"
 	},
   "devDependencies": {
-    "@songkick/injectassets": "*",
-    "@songkick/replaceinfiles": "*",
     "browser-sync-webpack-plugin": "*",
     "coffee-loader": "*",
     "hashmark": "*",

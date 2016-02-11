@@ -84,50 +84,51 @@ class Main
 		@audioTexture = new AudioTexture(@binCount,1)
 
 
-		for j in [0...32] by 1
-			material = new THREE.MeshLineMaterial(
-				map: null,
-				audio: @audioTexture,
-				color: new THREE.Color( 0xFFFFFF*Math.random() ),
-				opacity: 1,
-				transparent: true,
-				resolution: Stage3d.resolution,
-				sizeAttenuation: true,
-				lineWidth: 3,
-				blending: THREE.AdditiveBlending,
-				side:THREE.DoubleSide
-				near: Stage3d.camera.near,
-				far: Stage3d.camera.far,
-				depthTest:true,
-				depthWrite:false,
-			)
-
-			step = 50
-			p = (j+1)/32*2-1
-			radius = 110
-			radius = Math.sqrt(Math.pow(radius,2) - Math.pow(radius*p,2))
-
-			for i in [0...step] by 1
-				points = new Float32Array(step*3)
-				for i in [0..step] by 1
-					percent = i / (step-1)
-					angle = Math.PI*2*percent
-					k = i*3
-					points[k+0] = Math.cos(angle)*radius
-					points[k+1] = 0
-					points[k+2] = Math.sin(angle)*radius
-				line = new THREE.MeshLine()
-				line.setGeometry( points )
-			mesh = new THREE.Mesh(line.geometry,material)
-			mesh.frustumCulled = true
-			mesh.position.y = -110+(j/32)*220+10
-			Stage3d.add(mesh)
-			@lines.push(mesh)
+		# for j in [0...32] by 1
+		# 	material = new THREE.MeshLineMaterial(
+		# 		map: null,
+		# 		audio: @audioTexture,
+		# 		color: new THREE.Color( 0xFFFFFF*Math.random() ),
+		# 		opacity: 1,
+		# 		transparent: true,
+		# 		resolution: Stage3d.resolution,
+		# 		sizeAttenuation: true,
+		# 		lineWidth: 3,
+		# 		blending: THREE.AdditiveBlending,
+		# 		side:THREE.DoubleSide
+		# 		near: Stage3d.camera.near,
+		# 		far: Stage3d.camera.far,
+		# 		depthTest:true,
+		# 		depthWrite:false,
+		# 	)
+		#
+		# 	step = 50
+		# 	p = (j+1)/32*2-1
+		# 	radius = 110
+		# 	radius = Math.sqrt(Math.pow(radius,2) - Math.pow(radius*p,2))
+		#
+		# 	for i in [0...step] by 1
+		# 		points = new Float32Array(step*3)
+		# 		for i in [0..step] by 1
+		# 			percent = i / (step-1)
+		# 			angle = Math.PI*2*percent
+		# 			k = i*3
+		# 			points[k+0] = Math.cos(angle)*radius
+		# 			points[k+1] = 0
+		# 			points[k+2] = Math.sin(angle)*radius
+		# 		line = new THREE.MeshLine()
+		# 		line.setGeometry( points )
+		# 	mesh = new THREE.Mesh(line.geometry,material)
+		# 	mesh.frustumCulled = true
+		# 	mesh.position.y = -110+(j/32)*220+10
+		# 	Stage3d.add(mesh)
+		# 	@lines.push(mesh)
 
 		# SPHERE MIDDLE
-		material = new THREE.MeshBasicMaterial({color:0})
-		mesh = new THREE.Mesh( new THREE.SphereGeometry(100,32,32), material )
-		Stage3d.add(mesh)
+		# material = new THREE.MeshBasicMaterial({color:0})
+		# mesh = new THREE.Mesh( new THREE.SphereGeometry(100,32,32), material )
+		# Stage3d.add(mesh)
+
 		a.play()
 		VJ.init(@context)
 		VJ.onBeat.add(@onBeat)
