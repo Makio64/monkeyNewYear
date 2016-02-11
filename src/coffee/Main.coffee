@@ -316,6 +316,7 @@ class Main
 		} )
 
 	onBeat:()=>
+		Stage3d.control._radius = Math.random()*1000
 		return
 	# -------------------------------------------------------------------------- RESIZE
 
