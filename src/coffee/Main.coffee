@@ -115,18 +115,65 @@ class Main
 		})
 
 		loader = new THREE.JSONLoader()
+		@instancieds = []
 		loader.load( "obj/suzanneHi.js", ( geo, mat ) =>
 				@monkeykey = new THREE.Mesh( geo, @material )
-				# @monkeykey.scale.multiplyScalar( .25 )
-				Stage3d.add @monkeykey
+				# Stage3d.add @monkeykey
+
+				for k in [0...10]
+					geometry = new THREE.InstancedBufferGeometry()
+					g = new THREE.BufferGeometry()
+					g.fromGeometry( geo )
+					geometry.copy( g )
+
+					particleCount = Math.floor(geo.vertices.length/10)
+					translates = new Float32Array( particleCount * 3 )
+					rotations = new Float32Array( particleCount * 3 )
+					timeArray = new Float32Array( particleCount )
+					orientations = new THREE.InstancedBufferAttribute( new Float32Array( particleCount * 4 ), 4, 1 );
+					vector = new THREE.Vector4()
+					for i in [0...particleCount] by 1
+						i3 = i*3
+						# UNIFORMS & ATTRIBUTES
+						timeArray[i] =  Math.random()*1023
+						translates[ i3 + 0 ] = geo.vertices[i+k*particleCount].x
+						translates[ i3 + 1 ] = geo.vertices[i+k*particleCount].y
+						translates[ i3 + 2 ] = geo.vertices[i+k*particleCount].z
+						vector.set( (Math.random() * 2 - 1), (Math.random() * 2 - 1), (Math.random() * 2 - 1), 1 );
+						vector.normalize();
+						orientations.setXYZW( i, vector.x, vector.y, vector.z, vector.w );
+
+					geometry.addAttribute( "aTranslate", new THREE.InstancedBufferAttribute( translates, 3, 1 ) )
+					geometry.addAttribute( "aTime", new THREE.InstancedBufferAttribute( timeArray, 1, 1 ) )
+					geometry.addAttribute( 'orientation', orientations );
+
+					@uniforms = {
+						time: {type:'f', value:0}
+					}
+
+					material = new THREE.RawShaderMaterial( {
+						vertexShader: require('monkeyInstanced.vs'),
+						fragmentShader: require('monkeyInstanced.fs'),
+						uniforms: @uniforms,
+						depthTest: true,
+						depthWrite: true
+					} )
+
+					meshInstanced = new THREE.Mesh( geometry, material )
+					# Stage3d.add meshInstanced
+					@instancieds.push(meshInstanced)
+					@frustumCulled = false
+
+
+				a.play()
+				VJ.init(@context)
+				VJ.onBeat.add(@onBeat)
+				@masterGain.connect(VJ.analyser)
+
 			)
 
 		# ---------------------------------------------------------------------- START SOUND
 
-		a.play()
-		VJ.init(@context)
-		VJ.onBeat.add(@onBeat)
-		@masterGain.connect(VJ.analyser)
 
 
 		# ---------------------------------------------------------------------- STAGE EVENTS
@@ -140,6 +187,10 @@ class Main
 	update:(dt)=>
 		VJ.update(dt)
 		@vignette.params.boost += ((1 + VJ.volume*5)-@vignette.params.boost)*.22
+		for i in @instancieds
+			if i.parent
+				Stage3d.remove(i)
+		Stage3d.add @instancieds[Math.floor(Math.random()*@instancieds.length)]
 		# @analyser.getByteFrequencyData(@freqByteData)
 		# @analyser.getByteTimeDomainData(@timeByteData)
 		return
