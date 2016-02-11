@@ -205,7 +205,7 @@ class Main
 					depthTest: true,
 					depthWrite: true
 					transparent: true,
-					# blending: THREE.AdditiveBlending
+					blending: THREE.AdditiveBlending
 				} )
 				@monkeykeyMiddle = new THREE.Mesh( geo, material )
 				@monkeykeyMiddle.scale.multiplyScalar( 4.5 )
@@ -227,7 +227,7 @@ class Main
 					depthTest: true,
 					depthWrite: true
 					transparent: true,
-					# blending: THREE.AdditiveBlending
+					blending: THREE.AdditiveBlending
 				} )
 				@monkeykey = new THREE.Mesh( geo, material )
 				@monkeykey.scale.multiplyScalar( 6.5 )
