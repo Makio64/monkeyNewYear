@@ -22,7 +22,7 @@ class Main
 
 		# ---------------------------------------------------------------------- INIT
 
-		Stage3d.init({background:0x131011,clearAlpha:0.001})
+		Stage3d.init({background:0x131011,clearAlpha:0.9})
 		# Stage3d.initPostProcessing()
 
 		noisePass = new WAGNER.NoisePass();
@@ -116,7 +116,13 @@ class Main
 			blending: 		THREE.AdditiveBlending
 		})
 
+
+
+
+
 		loader = new THREE.JSONLoader()
+		@materials = [@material1()]
+
 		@instancieds = []
 		loader.load( "obj/suzanneHi.js", ( geo, mat ) =>
 				@monkeykey = new THREE.Mesh( geo, @material )
@@ -149,28 +155,14 @@ class Main
 					geometry.addAttribute( "aTime", new THREE.InstancedBufferAttribute( timeArray, 1, 1 ) )
 					geometry.addAttribute( 'orientation', orientations );
 
-					@uniforms = {
-						time: {type:'f', value:0}
-						lights:		{ type: "v3v", value: @lights }
-						colors:		{ type: "v3v", value: @colors }
-					}
-
-					material = new THREE.RawShaderMaterial( {
-						vertexShader: require('monkeyInstanced.vs'),
-						fragmentShader: require('monkey.fs'),
-						uniforms: @uniforms,
-						depthTest: true,
-						depthWrite: true
-					} )
-
-					meshInstanced = new THREE.Mesh( geometry, material )
+					meshInstanced = new THREE.Mesh( geometry, @materials[0] )
 					# Stage3d.add meshInstanced
 					@instancieds.push(meshInstanced)
 					@frustumCulled = false
 
 				Stage3d.add @instancieds[Math.floor(Math.random()*@instancieds.length)]
 
-				@monkeykey = new THREE.Mesh( geo, material )
+				@monkeykey = new THREE.Mesh( geo, @materials[0] )
 				Stage3d.add @monkeykey
 
 				a.play()
@@ -202,9 +194,27 @@ class Main
 			Stage3d.add @instancieds[Math.floor(Math.random()*@instancieds.length)]
 			@_idx = 0
 		@_idx++
+
+
 		# @analyser.getByteFrequencyData(@freqByteData)
 		# @analyser.getByteTimeDomainData(@timeByteData)
 		return
+
+	# ---------------------------------------------------------------------- MATERIAL
+	@uniforms = {
+		time: {type:'f', value:0}
+		lights:		{ type: "v3v", value: @lights }
+		colors:		{ type: "v3v", value: @colors }
+	}
+
+	material1:()->
+		return new THREE.RawShaderMaterial( {
+			vertexShader: require('monkeyInstanced.vs'),
+			fragmentShader: require('monkey.fs'),
+			uniforms: @uniforms,
+			depthTest: true,
+			depthWrite: true
+		} )
 
 	onBeat:()=>
 		return
