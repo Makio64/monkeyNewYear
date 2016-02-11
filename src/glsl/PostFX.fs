@@ -35,6 +35,9 @@ void main() {
 
 	//invert
 	color.rgb = mix(color.rgb, (1. - color.rgb),invertRatio);
+	color.r = smoothstep(-0.2, 1.0, color.r);
+	color.g = smoothstep(0.0, 1.0, color.g - 0.1);
+	color.b = smoothstep(-0.3, 1.3, color.b);
 	// color.rgb*=.6;
 	//
 	gl_FragColor = color;
