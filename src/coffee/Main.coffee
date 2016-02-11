@@ -104,6 +104,7 @@ class Main
 			time: 	   { type: "f", value: 0 }
 			lights:		{ type: "v3v", value: @lights }
 			colors:		{ type: "v3v", value: @colors }
+			opacity:		{ type: "f", value: 1 }
 		}
 
 		@material = new THREE.ShaderMaterial( {
@@ -152,6 +153,7 @@ class Main
 						time: {type:'f', value:0}
 						lights:		{ type: "v3v", value: @lights }
 						colors:		{ type: "v3v", value: @colors }
+						opacity:		{ type: "f", value: 1 }
 					}
 
 					material = new THREE.RawShaderMaterial( {
@@ -171,6 +173,44 @@ class Main
 
 				@monkeykey = new THREE.Mesh( geo, material )
 				Stage3d.add @monkeykey
+
+				@uniforms2 = {
+					time: 	   { type: "f", value: 0 }
+					lights:		{ type: "v3v", value: @lights }
+					colors:		{ type: "v3v", value: @colors }
+					opacity:		{ type: "f", value: .125 }
+				}
+
+				material = new THREE.RawShaderMaterial( {
+					vertexShader: require('monkeyInstanced.vs'),
+					fragmentShader: require('monkey.fs'),
+					uniforms: @uniforms2,
+					depthTest: true,
+					depthWrite: true
+					transparent: true
+				} )
+				@monkeykey = new THREE.Mesh( geo, material )
+				@monkeykey.scale.multiplyScalar( 4.5 )
+				Stage3d.add @monkeykey
+
+				# @uniforms3 = {
+				# 	time: 	   { type: "f", value: 0 }
+				# 	lights:		{ type: "v3v", value: @lights }
+				# 	colors:		{ type: "v3v", value: @colors }
+				# 	opacity:		{ type: "f", value: .3 }
+				# }
+				#
+				# material = new THREE.RawShaderMaterial( {
+				# 	vertexShader: require('monkeyInstanced.vs'),
+				# 	fragmentShader: require('monkey.fs'),
+				# 	uniforms: @uniforms3,
+				# 	depthTest: true,
+				# 	depthWrite: true
+				# 	transparent: true
+				# } )
+				# @monkeykey = new THREE.Mesh( geo, material )
+				# @monkeykey.scale.multiplyScalar( 3 )
+				# Stage3d.add @monkeykey
 
 				a.play()
 				VJ.init(@context)

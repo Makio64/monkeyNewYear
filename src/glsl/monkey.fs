@@ -6,6 +6,7 @@ varying vec3 vNormal;
 
 uniform vec3 lights[4];
 uniform vec3 colors[4];
+uniform float opacity;
 
 float exponentialIn(float t) {
   return t == 0.0 ? t : pow(2.0, 10.0 * (t - 1.0));
@@ -29,5 +30,5 @@ void main(void) {
 		col += lCol * intens;
 	}
 
-	gl_FragColor = vec4(col, 1.0);
+	gl_FragColor = vec4(col, opacity);
 }
