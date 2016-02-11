@@ -128,19 +128,19 @@ class Main
 
 		@instancieds = []
 		loader.load( "obj/suzanneHi.js", ( geo, mat ) =>
-				@monkeykey = new THREE.Mesh( geo, @material )
-				Stage3d.add @monkeykey
+				@monkeykeyMAIIIN = new THREE.Mesh( geo, @material )
+				Stage3d.add @monkeykeyMAIIIN
 
-				# @container1 = new THREE.Object3D()
-				# m = new THREE.Mesh( geo, @material )
-				# m.position.x = -100
-				# m.scale.multiplyScalar( .8 )
-				# @container1.add m
-				# m = new THREE.Mesh( geo, @material )
-				# m.position.x = 100
-				# m.scale.multiplyScalar( .8 )
-				# @container1.add m
-				# Stage3d.add @container1
+				@container1 = new THREE.Object3D()
+				@m1 = new THREE.Mesh( geo, @material )
+				@m1.position.x = -100
+				@m1.scale.multiplyScalar( .8 )
+				@container1.add @m1
+				@m2 = new THREE.Mesh( geo, @material )
+				@m2.position.x = 100
+				@m2.scale.multiplyScalar( .8 )
+				@container1.add @m2
+				Stage3d.add @container1
 
 				for k in [0...10]
 					geometry = new THREE.InstancedBufferGeometry()
@@ -319,6 +319,21 @@ class Main
 		@material1.uniforms.opacity.value = if r < .05 then 0 else .65 + VJ.volume * .1
 		@uniformsMaterial1.scale.value = .15 + VJ.volume*1
 
+		if r < .4
+			@monkeykeyMAIIIN.material.uniforms.opacity.value = 0
+		else
+			@monkeykeyMAIIIN.material.uniforms.opacity.value = .65
+
+		if VJ.volume > .12
+			@m1.material.uniforms.opacity.value = 0
+		else
+			@m1.material.uniforms.opacity.value = .23
+
+		if VJ.volume > .12
+			@m2.material.uniforms.opacity.value = 0
+		else
+			@m2.material.uniforms.opacity.value = .23
+
 		@c1.x = VJ.volume * .4 * 4
 		@c1.z = VJ.volume * .3 * 4
 		@c2.y = VJ.volume * .2 * 4
@@ -350,7 +365,7 @@ class Main
 		return @material1
 
 	onBeat:()=>
-		Stage3d.bouboup = !Stage3d.bouboup
+		Stage3d.bouboup = false#!Stage3d.bouboup
 		Stage3d.setColorFromOption({background:0xFFFFFF*Math.random()})
 		Stage3d.control.radius = Stage3d.control._radius = Math.random()*500+200
 		Stage3d.control.phi = 1.144271333985873
