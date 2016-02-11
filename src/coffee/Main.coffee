@@ -104,7 +104,7 @@ class Main
 			time: 	   { type: "f", value: 0 }
 			lights:		{ type: "v3v", value: @lights }
 			colors:		{ type: "v3v", value: @colors }
-			opacity:		{ type: "f", value: 1 }
+			opacity:		{ type: "f", value: .75 }
 		}
 
 		@material = new THREE.ShaderMaterial( {
@@ -114,7 +114,7 @@ class Main
 			depthTest:      true
 			depthWrite:     false
 			transparent:    true
-			blending: 		THREE.AdditiveBlending
+			# blending: 		THREE.AdditiveBlending
 		})
 
 		loader = new THREE.JSONLoader()
@@ -162,7 +162,8 @@ class Main
 						fragmentShader: require('monkey.fs'),
 						uniforms: @uniforms,
 						depthTest: true,
-						depthWrite: true
+						depthWrite: true,
+						blending: 		THREE.AdditiveBlending
 					} )
 
 					meshInstanced = new THREE.Mesh( geometry, material )
@@ -188,11 +189,52 @@ class Main
 					uniforms: @uniforms2,
 					depthTest: true,
 					depthWrite: true
-					transparent: true
+					transparent: true,
+					# blending: THREE.AdditiveBlending
 				} )
 				@monkeykey = new THREE.Mesh( geo, material )
 				@monkeykey.scale.multiplyScalar( 4.5 )
 				Stage3d.add @monkeykey
+
+				@uniforms3 = {
+					time: 	   { type: "f", value: 0 }
+					lights:		{ type: "v3v", value: @lights }
+					colors:		{ type: "v3v", value: @colors }
+					opacity:		{ type: "f", value: .125 }
+				}
+
+				material = new THREE.RawShaderMaterial( {
+					vertexShader: require('monkeyInstanced.vs'),
+					fragmentShader: require('monkey.fs'),
+					uniforms: @uniforms3,
+					depthTest: true,
+					depthWrite: true
+					transparent: true,
+					# blending: THREE.AdditiveBlending
+				} )
+				@monkeykey = new THREE.Mesh( geo, material )
+				@monkeykey.scale.multiplyScalar( 6.5 )
+				Stage3d.add @monkeykey
+
+				@uniforms4 = {
+					time: 	   { type: "f", value: 0 }
+					lights:		{ type: "v3v", value: @lights }
+					colors:		{ type: "v3v", value: @colors }
+					opacity:		{ type: "f", value: .2 }
+				}
+
+				material = new THREE.RawShaderMaterial( {
+					vertexShader: require('monkeyInstanced.vs'),
+					fragmentShader: require('monkey.fs'),
+					uniforms: @uniforms4,
+					depthTest: true,
+					depthWrite: true
+					transparent: true,
+					# blending: THREE.AdditiveBlending
+				} )
+				@monkeykey = new THREE.Mesh( geo, material )
+				@monkeykey.scale.multiplyScalar( 7.5 )
+				# Stage3d.add @monkeykey
 
 				# @uniforms3 = {
 				# 	time: 	   { type: "f", value: 0 }
@@ -242,6 +284,9 @@ class Main
 			Stage3d.add @instancieds[Math.floor(Math.random()*@instancieds.length)]
 			@_idx = 0
 		@_idx++
+
+		# @uniforms3.opacity.value = .125 * Math.random()
+		# @uniforms4.opacity.value = .15 * Math.random()
 		# @analyser.getByteFrequencyData(@freqByteData)
 		# @analyser.getByteTimeDomainData(@timeByteData)
 		return
