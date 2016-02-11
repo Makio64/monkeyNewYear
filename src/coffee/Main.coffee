@@ -267,52 +267,52 @@ class Main
 
 
 				# //------------------------------------------------------------ GRID SUHSIHSIHSISHISHSIHSI
-				# geometry = new THREE.InstancedBufferGeometry()
-				# g = new THREE.BufferGeometry()
-				# g.fromGeometry( geo )
-				# geometry.copy( g )
-				#
-				# width = 30
-				# height = 20
-				# particleCount = width*height
-				# translates = new Float32Array( particleCount * 3 )
-				# timeArray = new Float32Array( particleCount )
-				# orientations = new THREE.InstancedBufferAttribute( new Float32Array( particleCount * 4 ), 4, 1 );
-				# vector = new THREE.Vector4()
-				# for x in [0...width] by 1
-				# 	for y in [0...height] by 1
-				# 		i3 = (x+y*width)*3
-				# 		# UNIFORMS & ATTRIBUTES
-				# 		timeArray[i] =  Math.random()*1023
-				# 		translates[ i3 + 0 ] = (x-width/2)*50
-				# 		translates[ i3 + 1 ] = (y-height/2)*50
-				# 		translates[ i3 + 2 ] = 0
-				# 		vector.set( (Math.random() * 2 - 1), (Math.random() * 2 - 1), (Math.random() * 2 - 1), 1 );
-				# 		vector.normalize();
-				# 		orientations.setXYZW( i, vector.x, vector.y, vector.z, vector.w );
-				#
-				# geometry.addAttribute( "aTranslate", new THREE.InstancedBufferAttribute( translates, 3, 1 ) )
-				# geometry.addAttribute( "aTime", new THREE.InstancedBufferAttribute( timeArray, 1, 1 ) )
-				# geometry.addAttribute( 'orientation', orientations );
-				#
-				# @uniformsGrid = {
-				# 	time:		{ type: "f", value: 1 }
-				# }
-				#
-				# @materialGrid = new THREE.RawShaderMaterial( {
-				# 	vertexShader: require('monkeyGrid.vs'),
-				# 	fragmentShader: require('monkeyGrid.fs'),
-				# 	uniforms: @uniforms,
-				# 	depthTest: true,
-				# 	depthWrite: true,
-				# 	transparent:true
-				# 	# blending: 		THREE.AdditiveBlending
-				# } )
-				#
-				# @grid = new THREE.Mesh( geometry, @materialGrid )
-				# Stage3d.add meshInstanced
-				# # @instancieds.push(meshInstanced)
-				# @frustumCulled = false
+				geometry = new THREE.InstancedBufferGeometry()
+				g = new THREE.BufferGeometry()
+				g.fromGeometry( geo )
+				geometry.copy( g )
+
+				width = 9
+				height = 9
+				particleCount = width*height
+				translates = new Float32Array( particleCount * 3 )
+				timeArray = new Float32Array( particleCount )
+				orientations = new THREE.InstancedBufferAttribute( new Float32Array( particleCount * 4 ), 4, 1 );
+				vector = new THREE.Vector4()
+				for x in [0...width] by 1
+					for y in [0...height] by 1
+						i3 = (x+y*width)*3
+						# UNIFORMS & ATTRIBUTES
+						timeArray[i] =  Math.random()*1023
+						translates[ i3 + 0 ] = (x-width/2)*100
+						translates[ i3 + 1 ] = (y-height/2)*100
+						translates[ i3 + 2 ] = 100
+						vector.set( (Math.random() * 2 - 1), (Math.random() * 2 - 1), (Math.random() * 2 - 1), 1 );
+						vector.normalize();
+						orientations.setXYZW( i, vector.x, vector.y, vector.z, vector.w );
+
+				geometry.addAttribute( "aTranslate", new THREE.InstancedBufferAttribute( translates, 3, 1 ) )
+				geometry.addAttribute( "aTime", new THREE.InstancedBufferAttribute( timeArray, 1, 1 ) )
+				geometry.addAttribute( 'orientation', orientations );
+
+				@uniformsGrid = {
+					time:		{ type: "f", value: 1 }
+				}
+
+				@materialGrid = new THREE.RawShaderMaterial( {
+					vertexShader: require('monkeyGrid.vs'),
+					fragmentShader: require('monkeyGrid.fs'),
+					uniforms: @uniforms,
+					depthTest: true,
+					depthWrite: true,
+					transparent:true
+					# blending: 		THREE.AdditiveBlending
+				} )
+
+				@grid = new THREE.Mesh( geometry, @materialGrid )
+				Stage3d.add meshInstanced
+				# @instancieds.push(meshInstanced)
+				@frustumCulled = false
 
 				# @uniforms3 = {
 				# 	time: 	   { type: "f", value: 0 }
@@ -463,7 +463,7 @@ class Main
 		@material1.uniforms.opacity.value = if r < .05 then 0 else .65 + VJ.volume * .1
 		@uniformsMaterial1.scale.value = .15 + VJ.volume*1
 
-		# @grid.lookAt( Stage3d.camera.position )
+		@grid.lookAt( Stage3d.camera.position )
 
 		if r < .4
 			@monkeykeyMAIIIN.material.uniforms.opacity.value = .4
@@ -556,10 +556,10 @@ class Main
 			console.log("%c         m  m      ","background: ##{color}")
 
 
-		# if(Math.random()>.3 && @grid.parent)
-		# 	Stage3d.remove @grid
-		# else if !@grid.parent
-		# 	Stage3d.add @grid
+		if(Math.random()>.2 && @grid.parent)
+			Stage3d.remove @grid
+		else if !@grid.parent
+			Stage3d.add @grid
 		@globalScale = .001
 				# gui.add(@custom.shader.uniforms.noiseAmount,'value',0,1).name('noiseAmount').listen()
 				# gui.add(@custom.shader.uniforms.noiseSpeed,'value',0,1).name('noiseSpeed').listen()
