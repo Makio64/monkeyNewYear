@@ -292,8 +292,8 @@ class Main
 		@uniforms2.scale.value = VJ.volume
 		@uniformsA.scale.value = VJ.volume
 		# @uniformsA.scale.value = 1 + VJ.volume
-		@uniforms3.scale.value = VJ.volume*20
-		@uniforms4.scale.value = VJ.volume*20+1
+		@uniforms3.scale.value = VJ.volume*1.5
+		@uniforms4.scale.value = VJ.volume*10#+1
 		if @_idx > 6
 			for i in @instancieds
 				if i.parent
@@ -308,11 +308,11 @@ class Main
 		@material1.uniforms.opacity.value = if r < .05 then 0 else .65 + VJ.volume * .1
 		@uniformsMaterial1.scale.value = .15 + VJ.volume*1
 
-		@c1.x = VJ.volume * .4 * .5
-		@c1.z = VJ.volume * .2 * .5
-		@c2.y = VJ.volume * .3 * .5
-		@c3.z = VJ.volume * .1 * .5
-		@c4.x = VJ.volume * .05 * .5
+		@c1.x = VJ.volume * .4 * 4
+		@c1.z = VJ.volume * .3 * 4
+		@c2.y = VJ.volume * .2 * 4
+		@c3.z = VJ.volume * .2 * 4
+		@c4.x = VJ.volume * .4 * 4
 		return
 
 	# ---------------------------------------------------------------------- MATERIAL
