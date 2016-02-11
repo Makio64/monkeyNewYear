@@ -371,27 +371,32 @@ class Main
 		} )
 		return @material1
 
+	componentToHex:(c)->
+	    hex = c.toString(16)
+	    return hex
+
 	onBeat:()=>
 		console.clear()
 		@animMonkey++
+		color = @componentToHex(Math.floor((Math.random()*.2+.8)*0xFFFFFF))
 		if @animMonkey%2 == 0
-			console.log("          __")
-			console.log("     w  c(..)o")
-			console.log("      \__(-)")
-			console.log("          /\\")
-			console.log("       w_/(_)")
-			console.log("           /|")
-			console.log("          | \\")
-			console.log("         m  m")
+			console.log("%c          __       ","background: ##{color}")
+			console.log("%c     w  c(..)o     ","background: ##{color}")
+			console.log("%c      \__(-)       ","background: ##{color}")
+			console.log("%c          /\\        ","background: ##{color}")
+			console.log("%c       w_/(_)      ","background: ##{color}")
+			console.log("%c           /|      ","background: ##{color}")
+			console.log("%c          | \\      ","background: ##{color}")
+			console.log("%c         m  m      ","background: ##{color}")
 		else
-			console.log("          __")
-			console.log("        c(..)o")
-			console.log("      W  (-)  w")
-			console.log("       \__/\__/")
-			console.log("          (_)")
-			console.log("           /|")
-			console.log("          | \\")
-			console.log("         m  m")
+			console.log("%c          __       ","background: ##{color}")
+			console.log("%c        c(..)o     ","background: ##{color}")
+			console.log("%c      W  (-)  w    ","background: ##{color}")
+			console.log("%c       \__/\__/    ","background: ##{color}")
+			console.log("%c          (_)      ","background: ##{color}")
+			console.log("%c           /|      ","background: ##{color}")
+			console.log("%c          | \\      ","background: ##{color}")
+			console.log("%c         m  m      ","background: ##{color}")
 
 
 		@globalScale = .001
