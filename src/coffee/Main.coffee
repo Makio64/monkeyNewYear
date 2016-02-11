@@ -289,10 +289,10 @@ class Main
 					Stage3d.remove(i)
 			Stage3d.add @instancieds[Math.floor(Math.random()*@instancieds.length)]
 			@_idx = 0
+			@uniforms3.opacity.value = .125 * Math.random()
+			@uniforms4.opacity.value = .15 * Math.random()
 		@_idx++
 
-		# @uniforms3.opacity.value = .125 * Math.random()
-		# @uniforms4.opacity.value = .15 * Math.random()
 
 		# @analyser.getByteFrequencyData(@freqByteData)
 		# @analyser.getByteTimeDomainData(@timeByteData)
