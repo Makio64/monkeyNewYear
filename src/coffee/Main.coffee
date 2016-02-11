@@ -294,7 +294,6 @@ class Main
 
 	update:(dt)=>
 		VJ.update(dt)
-		@uniformsMaterial1.scale.value = VJ.volume*1
 		@vignette.params.boost += ((1 + VJ.volume*0.5)-@vignette.params.boost)*.22
 		@uniforms2.scale.value = VJ.volume
 		@uniformsA.scale.value = VJ.volume
@@ -312,7 +311,9 @@ class Main
 			@uniforms4.opacity.value = .15 * Math.random()
 		@_idx++
 		r = Math.random()
-		@material1.wireframe = @material.wireframe = r<.1
+		@material.wireframe = r < .05
+		@material1.uniforms.opacity.value = if r < .05 then 0 else .65 + VJ.volume * .1
+		@uniformsMaterial1.scale.value = .15 + VJ.volume*1
 		return
 
 	# ---------------------------------------------------------------------- MATERIAL
