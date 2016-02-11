@@ -23,6 +23,11 @@ class Main
 
 		Stage3d.init({background:0x131011,clearAlpha:0.4})
 		Stage3d.initPostProcessing()
+		@custom = new WAGNER.Pass()
+		@custom.shader = WAGNER.processShader( WAGNER.basicVs, require('postFX.fs') )
+		@custom.shader.uniforms.noiseAmount.value = 0.03
+		@custom.shader.uniforms.noiseSpeed.value = 1
+		Stage3d.addPass @custom
 
 		Stage3d.control = new OrbitControl(Stage3d.camera,500)
 		Stage3d.control.phi = 1.144271333985873
@@ -365,7 +370,14 @@ class Main
 		return @material1
 
 	onBeat:()=>
-		Stage3d.bouboup = false#!Stage3d.bouboup
+		# Stage3d.bouboup = !Stage3d.bouboup
+				# gui.add(@custom.shader.uniforms.noiseAmount,'value',0,1).name('noiseAmount').listen()
+				# gui.add(@custom.shader.uniforms.noiseSpeed,'value',0,1).name('noiseSpeed').listen()
+		@custom.shader.uniforms.invertRatio = if Math.random()<.1 then 1 else 0
+		@custom.shader.uniforms.mirrorX = if Math.random()<.1 then 1 else 0
+		# @custom.shader.uniforms.mirrorY = if Math.random()<.1 then 1 else 0
+		@custom.shader.uniforms.divide4.value = if Math.random()<.1 then 1 else 0
+
 		Stage3d.setColorFromOption({background:0xFFFFFF*Math.random()})
 		Stage3d.control.radius = Stage3d.control._radius = Math.random()*500+200
 		Stage3d.control.phi = 1.144271333985873
@@ -377,3 +389,4 @@ class Main
 		return
 
 module.exports = Main
+#

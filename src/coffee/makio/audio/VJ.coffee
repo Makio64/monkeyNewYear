@@ -17,7 +17,7 @@ class VJ
 	@levelsData = [] #levels of each frequecy - from 0 - 1 . no sound is 0. Array [levelsCount]
 	@levelHistory = []
 
-	@BEAT_HOLD_TIME = 120 #num of frames to hold a beat
+	@BEAT_HOLD_TIME = 90 #num of frames to hold a beat
 	@BEAT_DECAY_RATE = 0.97
 	@BEAT_MIN = 0.02 #level less than this is no beat
 
