@@ -21,7 +21,7 @@ class Stage3d
 	@isActivated 			= false
 
 	@clearAuto				= false
-	@clearAlpha				= 1
+	@clearAlpha				= 0.01
 	@clearColor				= 0xFFFFFF
 
 	@init = (options)=>
@@ -61,6 +61,7 @@ class Stage3d
 		return
 
 	@setColorFromOption = (options)=>
+		console.log(@clearAlpha)
 		@clearAlpha = if options.clearAlpha == undefined then 1 else options.clearAlpha
 		@renderer.setClearColor( parseInt(options.background), @clearAlpha )
 		return
