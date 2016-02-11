@@ -33,7 +33,7 @@ class Main
 		@time = 0
 		@context = new AudioContext()
 		@masterGain = @context.createGain()
-		@masterGain.gain.value = .01
+		@masterGain.gain.value = .1
 		@masterGain.connect(@context.destination)
 
 		@analyser = @context.createAnalyser()
@@ -308,11 +308,11 @@ class Main
 		@material1.uniforms.opacity.value = if r < .05 then 0 else .65 + VJ.volume * .1
 		@uniformsMaterial1.scale.value = .15 + VJ.volume*1
 
-		@c1.x = VJ.volume * .4
-		@c1.z = VJ.volume * .2
-		@c2.y = VJ.volume * .3
-		@c3.z = VJ.volume * .1
-		@c4.x = VJ.volume * .05
+		@c1.x = VJ.volume * .4 * .5
+		@c1.z = VJ.volume * .2 * .5
+		@c2.y = VJ.volume * .3 * .5
+		@c3.z = VJ.volume * .1 * .5
+		@c4.x = VJ.volume * .05 * .5
 		return
 
 	# ---------------------------------------------------------------------- MATERIAL
