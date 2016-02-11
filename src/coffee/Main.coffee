@@ -3,7 +3,6 @@
 Stage 			= require('makio/core/Stage')
 Stage3d 		= require('makio/core/Stage3d')
 Interactions 	= require('makio/core/Interactions')
-# gui				= require('makio/core/gui')
 OrbitControl 	= require('makio/3d/OrbitControls')
 Line 			= require('makio/3d/Line')
 AudioTexture 	= require('makio/3d/AudioTexture')
@@ -22,7 +21,7 @@ class Main
 
 		# ---------------------------------------------------------------------- INIT
 
-		Stage3d.init({background:0x131011,clearAlpha:0.9})
+		Stage3d.init({background:0x131011,clearAlpha:0.4})
 		# Stage3d.initPostProcessing()
 
 		noisePass = new WAGNER.NoisePass();
@@ -282,6 +281,7 @@ class Main
 
 	update:(dt)=>
 		VJ.update(dt)
+		@uniformsMaterial1.scale.value = VJ.volume*10
 		@vignette.params.boost += ((1 + VJ.volume*5)-@vignette.params.boost)*.22
 		if @_idx > 6
 			for i in @instancieds
@@ -299,24 +299,27 @@ class Main
 		return
 
 	# ---------------------------------------------------------------------- MATERIAL
-	@uniforms = {
-		time: {type:'f', value:0}
-		lights:		{ type: "v3v", value: @lights }
-		colors:		{ type: "v3v", value: @colors }
-	}
 
 	material1:()->
+		@uniformsMaterial1 = {
+			time: {type:'f', value:0}
+			scale: {type:'f', value:0}
+			lights:		{ type: "v3v", value: @lights }
+			colors:		{ type: "v3v", value: @colors }
+		}
+
 		return new THREE.RawShaderMaterial( {
 			vertexShader: require('monkeyInstanced.vs'),
 			fragmentShader: require('monkey.fs'),
-			uniforms: @uniforms,
+			uniforms: @uniformsMaterial1,
 			depthTest: true,
 			depthWrite: true,
 			blending: THREE.AdditiveBlending
 		} )
 
 	onBeat:()=>
-		Stage3d.control._radius = Math.random()*1000
+		Stage3d.control._radius = Math.random()*100+400
+		# Stage3d.control.theta = Math.random()
 		return
 	# -------------------------------------------------------------------------- RESIZE
 

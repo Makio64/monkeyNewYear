@@ -24,7 +24,7 @@ void main() {
 	vec3 vcV = cross(o, vPosition);
 	vPosition = vcV * (2.0 * orientation.w) + (cross(o, vcV) * 2.0 + vPosition);
 
-	vec3 pos = (vPosition*0.2+(aTranslate));
+	vec3 pos = (vPosition*scale+(aTranslate));
 	vec4 mvPosition = modelViewMatrix * vec4( pos, 1.0 );
 	gl_Position = projectionMatrix * mvPosition;
 }

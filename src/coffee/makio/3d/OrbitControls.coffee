@@ -100,7 +100,7 @@ class OrbitControls
 		else if(@vy<-@maxSpeed)
 			@vy = -@maxSpeed
 
-		@_radius += (@radius-@_radius)*0.05
+		@_radius += (@radius-@_radius)*0.2
 
 		@vx *= @friction
 		@vy *= @friction
