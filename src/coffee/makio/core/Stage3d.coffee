@@ -44,7 +44,7 @@ class Stage3d
 		@scene = new THREE.Scene()
 		@scene2 = new THREE.Scene()
 		@orthoCamera = new THREE.OrthographicCamera( - 0.5, 0.5, 0.5, - 0.5, 0, 1 )
-		@mesh =  new THREE.Mesh( new THREE.PlaneBufferGeometry( 1, 1 ), new THREE.MeshBasicMaterial({color:@clearColor,transparent:true,opacity:@clearAlpha}) )
+		@mesh =  new THREE.Mesh( new THREE.PlaneBufferGeometry( 1, 1 ), new THREE.MeshBasicMaterial({color:0xFF00FF,transparent:true,opacity:@clearAlpha}) )
 		@scene2.add( @mesh )
 
 		transparent = options.transparent||false
@@ -61,7 +61,7 @@ class Stage3d
 		return
 
 	@setColorFromOption = (options)=>
-		console.log(@clearAlpha)
+		@clearColor = @mesh.material.color = options.background
 		@clearAlpha = if options.clearAlpha == undefined then 1 else options.clearAlpha
 		@renderer.setClearColor( parseInt(options.background), @clearAlpha )
 		return
@@ -124,17 +124,21 @@ class Stage3d
 		@renderer.autoClearColor = @clearAuto
 		@renderer.autoClear = @clearAuto
 		@mesh.material.opacity = @clearAlpha
+		@mesh.material.color = Math.floor(@clearColor)
 
 		if(@control)
 			@control.update(dt)
 
 		@onBeforeRenderer.dispatch()
 
+		console.log(@mesh.material.color)
+
 		if(@usePostProcessing)
+			# @composer.reset()
+			# @composer.render( @scene2, @orthoCamera )
+			# @composer.toScreen()
 			@composer.reset()
-			@composer.render( @scene2, @orthoCamera )
-			@composer.toScreen()
-			@composer.reset()
+			@renderer.clear()
 			@composer.render( @scene, @camera )
 			for pass in @passes
 				@composer.pass( pass )
