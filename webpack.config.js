@@ -26,6 +26,7 @@ module.exports = {
 			__dirname+'/src/jade',
 			__dirname+'/static/data/',
 			__dirname+'/static/obj/',
+			__dirname+'/src/glsl/',
 			__dirname+'/static/vendors/'
 		],
 		alias: {

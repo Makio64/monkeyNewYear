@@ -68,23 +68,19 @@ class Main
 		@audioTexture = new AudioTexture(@binCount,1)
 
 		# MONKEY MONKEY
-
 		@uniforms = {
-			opacity:   { type: "f", value: 1 }
-			color:     { type: "v3", value: new THREE.Vector3(1,1,1) }
-			size: 	   { type: "f", value: 5*(window.devicePixelRatio/2) }
 			time: 	   { type: "f", value: 0 }
 		}
 
-		# material = new THREE.ShaderMaterial( {
-		# 	uniforms:       @uniforms
-		# 	vertexShader:   require('base/basic.vx')
-		# 	fragmentShader: require('base/basic.fs')
-		# 	depthTest:      true
-		# 	depthWrite:     false
-		# 	transparent:    true
-		# 	blending: 		THREE.AdditiveBlending
-		# })
+		material = new THREE.ShaderMaterial( {
+			uniforms:       @uniforms
+			vertexShader:   require('monkey.vs')
+			fragmentShader: require('monkey.fs')
+			depthTest:      true
+			depthWrite:     false
+			transparent:    true
+			blending: 		THREE.AdditiveBlending
+		})
 
 		loader = new THREE.JSONLoader()
 		loader.load( "obj/suzanneHi.js", ( geo, mat ) =>
