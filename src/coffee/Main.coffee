@@ -16,7 +16,7 @@ class Main
 	constructor:(@callback)->
 
 		@callback(.5)
-
+		@animMonkey = 0
 		@_idx = 0
 
 		# ---------------------------------------------------------------------- INIT
@@ -304,7 +304,7 @@ class Main
 
 	update:(dt)=>
 		VJ.update(dt)
-		@uniformsMaterial1.scale.value = VJ.volume*1
+		@uniformsMaterial1.scale.value = VJ.volume*@globalScale
 		@uniforms2.scale.value = VJ.volume
 		@uniformsA.scale.value = VJ.volume
 		# @uniformsA.scale.value = 1 + VJ.volume
@@ -372,13 +372,36 @@ class Main
 		return @material1
 
 	onBeat:()=>
-		# Stage3d.bouboup = !Stage3d.bouboup
+		console.clear()
+		@animMonkey++
+		if @animMonkey%2 == 0
+			console.log("          __")
+			console.log("     w  c(..)o")
+			console.log("      \__(-)")
+			console.log("          /\\")
+			console.log("       w_/(_)")
+			console.log("           /|")
+			console.log("          | \\")
+			console.log("         m  m")
+		else
+			console.log("          __")
+			console.log("        c(..)o")
+			console.log("      W  (-)  w")
+			console.log("       \__/\__/")
+			console.log("          (_)")
+			console.log("           /|")
+			console.log("          | \\")
+			console.log("         m  m")
+
+
+		@globalScale = .001
 				# gui.add(@custom.shader.uniforms.noiseAmount,'value',0,1).name('noiseAmount').listen()
 				# gui.add(@custom.shader.uniforms.noiseSpeed,'value',0,1).name('noiseSpeed').listen()
 		@custom.shader.uniforms.invertRatio = if Math.random()<.1 then 1 else 0
 		@custom.shader.uniforms.mirrorX = if Math.random()<.1 then 1 else 0
 		# @custom.shader.uniforms.mirrorY = if Math.random()<.1 then 1 else 0
 		@custom.shader.uniforms.divide4.value = if Math.random()<.1 then 1 else 0
+		Stage3d.bouboup = if @custom.shader.uniforms.divide4.value==1 && Math.random()<.2 then 1 else 0
 		@uniformsMaterial1.normalMode.value = if Math.random()<.1 then 1 else 0
 		@uniformsMaterial1.orientationMode.value = if Math.random()>.1 then 1 else 0
 

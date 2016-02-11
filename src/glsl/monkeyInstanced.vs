@@ -17,6 +17,7 @@ varying vec3 vPos;
 void main() {
 	vNormal = normal;
 	vPos = position;
+	float s = scale;
 
 	vec3 vPosition = position;
 
@@ -30,9 +31,10 @@ void main() {
 		vec3 o = normal.xyz;
 		vec3 vcV = cross(o, vPosition);
 		vPosition = vcV * (2.0 * orientation.w) + (cross(o, vcV) * 2.0 + vPosition);
+		s*=.2;
 	}
 
-	vec3 pos = (vPosition*scale+(aTranslate));
+	vec3 pos = (vPosition*s+(aTranslate));
 	vec4 mvPosition = modelViewMatrix * vec4( pos, 1.0 );
 	gl_Position = projectionMatrix * mvPosition;
 }
