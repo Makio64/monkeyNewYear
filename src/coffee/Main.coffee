@@ -22,8 +22,8 @@ class Main
 
 		# ---------------------------------------------------------------------- INIT
 
-		Stage3d.init({background:0x131011})
-		Stage3d.initPostProcessing()
+		Stage3d.init({background:0x131011,clearAlpha:0.001})
+		# Stage3d.initPostProcessing()
 
 		noisePass = new WAGNER.NoisePass();
 		noisePass.params.amount = 0.1
@@ -120,7 +120,8 @@ class Main
 		loader = new THREE.JSONLoader()
 		@instancieds = []
 		loader.load( "obj/suzanneHi.js", ( geo, mat ) =>
-
+				@monkeykey = new THREE.Mesh( geo, @material )
+				Stage3d.add @monkeykey
 
 				for k in [0...10]
 					geometry = new THREE.InstancedBufferGeometry()
