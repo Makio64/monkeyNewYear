@@ -36,7 +36,7 @@ class Main
 
 		Stage3d.control = new OrbitControl(Stage3d.camera,500)
 		Stage3d.control.phi = 1.144271333985873
-		Stage3d.control.theta = 0.6269963207446427
+		Stage3d.control.theta = -1.12
 
 		# ---------------------------------------------------------------------- SOUND
 
@@ -44,7 +44,7 @@ class Main
 		@context = new AudioContext()
 		@masterGain = @context.createGain()
 		@masterGain.gain.value = .1
-		# @masterGain.connect(@context.destination)
+		@masterGain.connect(@context.destination)
 
 		@analyser = @context.createAnalyser()
 		@analyser.smoothingTimeConstant = 0.4
@@ -57,7 +57,7 @@ class Main
 		@waveData = new Uint8Array(@binCount)
 
 		a = document.createElement( 'audio' )
-		a.src = "audio/faded.mp3"
+		a.src = "audio/daddy.mp3"
 		a.loop = true
 		audioSource = @context.createMediaElementSource( a )
 		audioSource.connect( @masterGain )
@@ -281,8 +281,8 @@ class Main
 
 	update:(dt)=>
 		VJ.update(dt)
-		@uniformsMaterial1.scale.value = VJ.volume*10
-		@vignette.params.boost += ((1 + VJ.volume*5)-@vignette.params.boost)*.22
+		@uniformsMaterial1.scale.value = VJ.volume*1
+		@vignette.params.boost += ((1 + VJ.volume*0.5)-@vignette.params.boost)*.22
 		if @_idx > 6
 			for i in @instancieds
 				if i.parent
@@ -290,6 +290,10 @@ class Main
 			Stage3d.add @instancieds[Math.floor(Math.random()*@instancieds.length)]
 			@_idx = 0
 		@_idx++
+
+		r = Math.random()
+		@material1.wireframe = @material.wireframe = r<.1
+		# @material1.wireframe = Math.random()<.1
 
 		# @uniforms3.opacity.value = .125 * Math.random()
 		# @uniforms4.opacity.value = .15 * Math.random()
@@ -308,7 +312,7 @@ class Main
 			colors:		{ type: "v3v", value: @colors }
 		}
 
-		return new THREE.RawShaderMaterial( {
+		@material1= new THREE.RawShaderMaterial( {
 			vertexShader: require('monkeyInstanced.vs'),
 			fragmentShader: require('monkey.fs'),
 			uniforms: @uniformsMaterial1,
@@ -316,11 +320,13 @@ class Main
 			depthWrite: true,
 			blending: THREE.AdditiveBlending
 		} )
+		return @material1
 
 	onBeat:()=>
 		Stage3d.setColorFromOption({background:0xFFFFFF*Math.random()})
-		Stage3d.control._radius = Math.random()*100+400
-		# Stage3d.control.theta = Math.random()
+		Stage3d.control.radius = Stage3d.control._radius = Math.random()*500+300
+		Stage3d.control.phi = 1.144271333985873
+		Stage3d.control.theta = -Math.PI/2+(Math.random()-.5)*.5
 		return
 	# -------------------------------------------------------------------------- RESIZE
 
