@@ -24,16 +24,6 @@ class Main
 		Stage3d.init({background:0x131011,clearAlpha:0.4})
 		# Stage3d.initPostProcessing()
 
-		noisePass = new WAGNER.NoisePass();
-		noisePass.params.amount = 0.1
-		noisePass.params.speed = 0.2
-		Stage3d.addPass(noisePass)
-
-		@vignette = new WAGNER.Vignette2Pass()
-		@vignette.params.boost = 1.4
-		@vignette.params.reduction = 2
-		Stage3d.addPass(@vignette)
-
 		Stage3d.control = new OrbitControl(Stage3d.camera,500)
 		Stage3d.control.phi = 1.144271333985873
 		Stage3d.control.theta = -1.12
@@ -43,7 +33,7 @@ class Main
 		@time = 0
 		@context = new AudioContext()
 		@masterGain = @context.createGain()
-		@masterGain.gain.value = .1
+		@masterGain.gain.value = .01
 		@masterGain.connect(@context.destination)
 
 		@analyser = @context.createAnalyser()
@@ -298,13 +288,12 @@ class Main
 
 	update:(dt)=>
 		VJ.update(dt)
-		@vignette.params.boost += ((1 + VJ.volume*0.5)-@vignette.params.boost)*.22
+		@uniformsMaterial1.scale.value = VJ.volume*1
 		@uniforms2.scale.value = VJ.volume
 		@uniformsA.scale.value = VJ.volume
 		# @uniformsA.scale.value = 1 + VJ.volume
-		# @uniforms3.scale.value = 1 + VJ.volume
-		# @uniforms3.scale.value = VJ.volume
-		@vignette.params.boost += ((1 + VJ.volume*5)-@vignette.params.boost)*.22
+		@uniforms3.scale.value = VJ.volume*20
+		@uniforms4.scale.value = VJ.volume*20+1
 		if @_idx > 6
 			for i in @instancieds
 				if i.parent
@@ -351,7 +340,7 @@ class Main
 
 	onBeat:()=>
 		Stage3d.setColorFromOption({background:0xFFFFFF*Math.random()})
-		Stage3d.control.radius = Stage3d.control._radius = Math.random()*500+300
+		Stage3d.control.radius = Stage3d.control._radius = Math.random()*500+200
 		Stage3d.control.phi = 1.144271333985873
 		Stage3d.control.theta = -Math.PI/2+(Math.random()-.5)*.5
 		return
