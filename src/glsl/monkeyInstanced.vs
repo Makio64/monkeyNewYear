@@ -20,7 +20,7 @@ void main() {
 	vPos = position;
 
 	vec3 vPosition = position;
-	vec3 o = normal.xyz;
+	vec3 o = orientation.xyz;
 	vec3 vcV = cross(o, vPosition);
 	vPosition = vcV * (2.0 * orientation.w) + (cross(o, vcV) * 2.0 + vPosition);
 
