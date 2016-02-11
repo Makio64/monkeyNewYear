@@ -463,6 +463,8 @@ class Main
 		@material1.uniforms.opacity.value = if r < .05 then 0 else .65 + VJ.volume * .1
 		@uniformsMaterial1.scale.value = .15 + VJ.volume*1
 
+		@grid.lookAt( Stage3d.camera.position )
+
 		if r < .4
 			@monkeykeyMAIIIN.material.uniforms.opacity.value = 0
 		else
@@ -489,14 +491,14 @@ class Main
 			@_showText()
 		else
 			@_hideText()
-
-
-		if !@_isShown
-			if Math.random() < .01
-				@_hideText()
-		else
-			if Math.random() < .05
-				@_showText()
+		#
+		#
+		# if !@_isShown
+		# 	if Math.random() < .01
+		# 		@_hideText()
+		# else
+		# 	if Math.random() < .05
+		# 		@_showText()
 
 
 
@@ -554,7 +556,7 @@ class Main
 			console.log("%c         m  m      ","background: ##{color}")
 
 
-		if(Math.random()>.3 && @grid.parent)
+		if(Math.random()>.05 && @grid.parent)
 			Stage3d.remove @grid
 		else if !@grid.parent
 			Stage3d.add @grid
