@@ -111,7 +111,7 @@ class Main
 			time: 	   { type: "f", value: 0 }
 			lights:		{ type: "v3v", value: @lights }
 			colors:		{ type: "v3v", value: @colors }
-			opacity:		{ type: "f", value: .75 }
+			opacity:		{ type: "f", value: .65 }
 			scale:		{ type: "f", value: 0 }
 		}
 
@@ -324,6 +324,8 @@ class Main
 			scale: {type:'f', value:0}
 			lights:		{ type: "v3v", value: @lights }
 			colors:		{ type: "v3v", value: @colors }
+			# opacity:		{ type: "f", value: .4 }
+			opacity:		{ type: "f", value: .75}
 		}
 
 		return new THREE.RawShaderMaterial( {
@@ -332,7 +334,8 @@ class Main
 			uniforms: @uniformsMaterial1,
 			depthTest: true,
 			depthWrite: true,
-			blending: THREE.AdditiveBlending
+			transparent: true,
+			# blending: THREE.AdditiveBlending
 		} )
 
 	onBeat:()=>
