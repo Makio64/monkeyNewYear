@@ -56,8 +56,8 @@ module.exports = {
 			isMobile: "isMobile"
 		}),
 		new BrowserSyncPlugin({
-			host: 'localhost',
-			port: 9000,
+			// host: 'localhost',
+			// port: 9000,
 			server: { baseDir: ['build','static','src'] },
 			open: true,
 			files:['build/**/*','static/**/*']
