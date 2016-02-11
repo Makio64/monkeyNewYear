@@ -12,6 +12,7 @@ class Stage3d
 	@scene 		= null
 	@renderer 	= null
 	@isInit		= false
+	@bouboup 	= false
 
 	# postProcess with wagner
 	@postProcessInitiated 	= false
@@ -131,18 +132,24 @@ class Stage3d
 
 		@onBeforeRenderer.dispatch()
 
-		console.log(@mesh.material.color)
-
 		if(@usePostProcessing)
-			# @composer.reset()
-			# @composer.render( @scene2, @orthoCamera )
-			# @composer.toScreen()
-			@composer.reset()
-			@renderer.clear()
-			@composer.render( @scene, @camera )
-			for pass in @passes
-				@composer.pass( pass )
-			@composer.toScreen()
+			if(@bouboup)
+				@composer.reset()
+				@renderer.clear()
+				@composer.render( @scene, @camera )
+				for pass in @passes
+					@composer.pass( pass )
+				@composer.toScreen()
+			else
+				@composer.reset()
+				@composer.render( @scene2, @orthoCamera )
+				# @composer.toScreen()
+				@composer.reset()
+				@renderer.clear()
+				@composer.render( @scene, @camera )
+				for pass in @passes
+					@composer.pass( pass )
+				@composer.toScreen()
 		else
 			@renderer.clear()
 			@renderer.render(@scene, @camera)

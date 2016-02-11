@@ -22,7 +22,7 @@ class Main
 		# ---------------------------------------------------------------------- INIT
 
 		Stage3d.init({background:0x131011,clearAlpha:0.4})
-		# Stage3d.initPostProcessing()
+		Stage3d.initPostProcessing()
 
 		Stage3d.control = new OrbitControl(Stage3d.camera,500)
 		Stage3d.control.phi = 1.144271333985873
@@ -350,6 +350,7 @@ class Main
 		return @material1
 
 	onBeat:()=>
+		Stage3d.bouboup = !Stage3d.bouboup
 		Stage3d.setColorFromOption({background:0xFFFFFF*Math.random()})
 		Stage3d.control.radius = Stage3d.control._radius = Math.random()*500+200
 		Stage3d.control.phi = 1.144271333985873
