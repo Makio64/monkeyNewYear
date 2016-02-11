@@ -1,3 +1,5 @@
+precision lowp float;
+
 // varying vec2 vUv;
 varying vec3 vPos;
 varying vec3 vNormal;

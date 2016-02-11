@@ -149,11 +149,13 @@ class Main
 
 					@uniforms = {
 						time: {type:'f', value:0}
+						lights:		{ type: "v3v", value: @lights }
+						colors:		{ type: "v3v", value: @colors }
 					}
 
 					material = new THREE.RawShaderMaterial( {
 						vertexShader: require('monkeyInstanced.vs'),
-						fragmentShader: require('monkeyInstanced.fs'),
+						fragmentShader: require('monkey.fs'),
 						uniforms: @uniforms,
 						depthTest: true,
 						depthWrite: true
