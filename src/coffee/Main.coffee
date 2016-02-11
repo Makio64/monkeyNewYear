@@ -77,16 +77,20 @@ class Main
 		# for i in [0...10] by 1
 		# 	theta += (1 / 10)*Math.PI*2
 		@lights.push(new THREE.Vector3( 100, 100, 100 ))
-		@colors.push(new THREE.Vector3( 255, 0, 255 ))
+		@c1 = new THREE.Vector3( 255, 0, 255 )
+		@colors.push( @c1 )
 
 		@lights.push(new THREE.Vector3( -100, 100, 100 ))
-		@colors.push(new THREE.Vector3( 0, 255, 0 ))
+		@c2 = new THREE.Vector3( 0, 255, 0 )
+		@colors.push( @c2 )
 
 		@lights.push(new THREE.Vector3( 0, -100, 0 ))
-		@colors.push(new THREE.Vector3( 0, 0, 255 ))
+		@c3 = new THREE.Vector3( 0, 0, 255 )
+		@colors.push( @c3 )
 
 		@lights.push(new THREE.Vector3( 0, 100, 0 ))
-		@colors.push(new THREE.Vector3( 255, 0, 0 ))
+		@c4 = new THREE.Vector3( 255, 0, 0 )
+		@colors.push( @c4 )
 
 
 		# @uniforms = {
@@ -314,6 +318,12 @@ class Main
 		@material.wireframe = r < .05
 		@material1.uniforms.opacity.value = if r < .05 then 0 else .65 + VJ.volume * .1
 		@uniformsMaterial1.scale.value = .15 + VJ.volume*1
+
+		@c1.x = VJ.volume * .4
+		@c1.z = VJ.volume * .2
+		@c2.y = VJ.volume * .3
+		@c3.z = VJ.volume * .1
+		@c4.x = VJ.volume * .05
 		return
 
 	# ---------------------------------------------------------------------- MATERIAL
