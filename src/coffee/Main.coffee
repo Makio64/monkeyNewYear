@@ -298,9 +298,96 @@ class Main
 		Stage.onUpdate.add(@update)
 		Stage.onResize.add(@resize)
 		@callback(1)
+
+		@_handleText()
+
 		return
 
 	# -------------------------------------------------------------------------- UPDATE
+
+	_handleText: () ->
+		@_domCnt = document.getElementById( "title-content" )
+		@_domSpans = @_domCnt.querySelectorAll( "span" )
+
+		@_isShown = false
+		# for i in [0...@_domSpans.length]
+		#
+		return
+
+	_showText: () ->
+		for dom in @_domSpans
+			TweenMax.set( dom, {
+				css: {
+					alpha: 1
+				}
+			})
+		# 	TweenMax.to( dom, .05, {
+		# 		alpha: 1,
+		# 		ease: Cubic.easeOut
+		# 	})
+		# 	TweenMax.set( dom, {
+		# 		delay: .2,
+		# 		alpha: 0,
+		# 		ease: Cubic.easeOut
+		# 	})
+		# 	TweenMax.to( dom, .05, {
+		# 		delay: .3,
+		# 		alpha: 1,
+		# 		ease: Cubic.easeOut
+		# 	})
+		# 	TweenMax.set( dom, {
+		# 		delay: .5,
+		# 		alpha: 0,
+		# 		ease: Cubic.easeOut
+		# 	})
+		# 	TweenMax.to( dom, .05, {
+		# 		delay: .6,
+		# 		alpha: 1,
+		# 		ease: Cubic.easeOut
+		# 	})
+		# @_isShown = true
+		return
+
+	_hideText: () ->
+		for dom in @_domSpans
+			TweenMax.set( dom, {
+				css: {
+					alpha: 0
+				}
+			})
+			# TweenMax.to( dom, .05, {
+			# 	alpha: 0,
+			# 	ease: Cubic.easeOut
+			# })
+			# TweenMax.set( dom, {
+			# 	delay: .2,
+			# 	alpha: 1,
+			# 	ease: Cubic.easeOut
+			# })
+			# TweenMax.to( dom, .05, {
+			# 	delay: .3,
+			# 	alpha: 0,
+			# 	ease: Cubic.easeOut
+			# })
+			# TweenMax.set( dom, {
+			# 	delay: .5,
+			# 	alpha: 1,
+			# 	ease: Cubic.easeOut
+			# })
+			# TweenMax.to( dom, .05, {
+			# 	delay: .6,
+			# 	alpha: 0,
+			# 	ease: Cubic.easeOut
+			# })
+		@_isShown = false
+		return
+
+	_updateText: () ->
+		if @_isShown
+			@_hideText()
+		else
+			@_showText()
+		return
 
 	update:(dt)=>
 		VJ.update(dt)
@@ -344,6 +431,23 @@ class Main
 		@c2.y = VJ.volume * .2 * 4
 		@c3.z = VJ.volume * .2 * 4
 		@c4.x = VJ.volume * .4 * 4
+
+		# console.log VJ.volume
+		if VJ.volume > .21
+			@_showText()
+		else
+			@_hideText()
+
+
+		if !@_isShown
+			if Math.random() < .01
+				@_hideText()
+		else
+			if Math.random() < .05
+				@_showText()
+
+
+
 		return
 
 	# ---------------------------------------------------------------------- MATERIAL
