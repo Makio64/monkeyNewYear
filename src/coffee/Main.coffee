@@ -104,10 +104,19 @@ class Main
 			lights:		{ type: "v3v", value: @lights }
 			colors:		{ type: "v3v", value: @colors }
 			opacity:		{ type: "f", value: .75 }
+			scale:		{ type: "f", value: 0 }
+		}
+
+		@uniformsA = {
+			time: 	   { type: "f", value: 0 }
+			lights:		{ type: "v3v", value: @lights }
+			colors:		{ type: "v3v", value: @colors }
+			opacity:		{ type: "f", value: .65 }
+			scale:		{ type: "f", value: 0 }
 		}
 
 		@material = new THREE.ShaderMaterial( {
-			uniforms:       @uniforms
+			uniforms:       @uniformsA
 			vertexShader:   require('monkey.vs')
 			fragmentShader: require('monkey.fs')
 			depthTest:      true
@@ -186,6 +195,7 @@ class Main
 					lights:		{ type: "v3v", value: @lights }
 					colors:		{ type: "v3v", value: @colors }
 					opacity:		{ type: "f", value: .125 }
+					scale: {type:'f', value:0}
 				}
 
 				material = new THREE.RawShaderMaterial( {
@@ -195,17 +205,19 @@ class Main
 					depthTest: true,
 					depthWrite: true
 					transparent: true,
-					# blending: THREE.AdditiveBlending
+					blending: THREE.AdditiveBlending
 				} )
-				@monkeykey = new THREE.Mesh( geo, material )
-				@monkeykey.scale.multiplyScalar( 4.5 )
-				Stage3d.add @monkeykey
+				@monkeykeyMiddle = new THREE.Mesh( geo, material )
+				@monkeykeyMiddle.scale.multiplyScalar( 4.5 )
+				Stage3d.add @monkeykeyMiddle
 
 				@uniforms3 = {
 					time: 	   { type: "f", value: 0 }
 					lights:		{ type: "v3v", value: @lights }
 					colors:		{ type: "v3v", value: @colors }
 					opacity:		{ type: "f", value: .125 }
+					# scale: {type:'f', value:1}
+					scale: {type:'f', value:.175}
 				}
 
 				material = new THREE.RawShaderMaterial( {
@@ -215,7 +227,7 @@ class Main
 					depthTest: true,
 					depthWrite: true
 					transparent: true,
-					# blending: THREE.AdditiveBlending
+					blending: THREE.AdditiveBlending
 				} )
 				@monkeykey = new THREE.Mesh( geo, material )
 				@monkeykey.scale.multiplyScalar( 6.5 )
@@ -226,6 +238,7 @@ class Main
 					lights:		{ type: "v3v", value: @lights }
 					colors:		{ type: "v3v", value: @colors }
 					opacity:		{ type: "f", value: .2 }
+					scale: {type:'f', value:.2}
 				}
 
 				material = new THREE.RawShaderMaterial( {
@@ -239,7 +252,7 @@ class Main
 				} )
 				@monkeykey = new THREE.Mesh( geo, material )
 				@monkeykey.scale.multiplyScalar( 7.5 )
-				# Stage3d.add @monkeykey
+				Stage3d.add @monkeykey
 
 				# @uniforms3 = {
 				# 	time: 	   { type: "f", value: 0 }
@@ -283,23 +296,23 @@ class Main
 		VJ.update(dt)
 		@uniformsMaterial1.scale.value = VJ.volume*1
 		@vignette.params.boost += ((1 + VJ.volume*0.5)-@vignette.params.boost)*.22
+		@uniforms2.scale.value = VJ.volume
+		@uniformsA.scale.value = VJ.volume
+		# @uniformsA.scale.value = 1 + VJ.volume
+		# @uniforms3.scale.value = 1 + VJ.volume
+		# @uniforms3.scale.value = VJ.volume
+		@vignette.params.boost += ((1 + VJ.volume*5)-@vignette.params.boost)*.22
 		if @_idx > 6
 			for i in @instancieds
 				if i.parent
 					Stage3d.remove(i)
 			Stage3d.add @instancieds[Math.floor(Math.random()*@instancieds.length)]
 			@_idx = 0
+			@uniforms3.opacity.value = .125 * Math.random()
+			@uniforms4.opacity.value = .15 * Math.random()
 		@_idx++
-
 		r = Math.random()
 		@material1.wireframe = @material.wireframe = r<.1
-		# @material1.wireframe = Math.random()<.1
-
-		# @uniforms3.opacity.value = .125 * Math.random()
-		# @uniforms4.opacity.value = .15 * Math.random()
-
-		# @analyser.getByteFrequencyData(@freqByteData)
-		# @analyser.getByteTimeDomainData(@timeByteData)
 		return
 
 	# ---------------------------------------------------------------------- MATERIAL
@@ -310,6 +323,8 @@ class Main
 			scale: {type:'f', value:0}
 			lights:		{ type: "v3v", value: @lights }
 			colors:		{ type: "v3v", value: @colors }
+			# opacity:		{ type: "f", value: .4 }
+			opacity:		{ type: "f", value: .75}
 		}
 
 		@material1= new THREE.RawShaderMaterial( {
@@ -318,7 +333,8 @@ class Main
 			uniforms: @uniformsMaterial1,
 			depthTest: true,
 			depthWrite: true,
-			blending: THREE.AdditiveBlending
+			transparent: true,
+			# blending: THREE.AdditiveBlending
 		} )
 		return @material1
 
