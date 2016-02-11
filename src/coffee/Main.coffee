@@ -463,22 +463,22 @@ class Main
 		@material1.uniforms.opacity.value = if r < .05 then 0 else .65 + VJ.volume * .1
 		@uniformsMaterial1.scale.value = .15 + VJ.volume*1
 
-		@grid.lookAt( Stage3d.camera.position )
+		# @grid.lookAt( Stage3d.camera.position )
 
 		if r < .4
-			@monkeykeyMAIIIN.material.uniforms.opacity.value = 0
+			@monkeykeyMAIIIN.material.uniforms.opacity.value = .4
 		else
 			@monkeykeyMAIIIN.material.uniforms.opacity.value = .65
 
-		if VJ.volume > .12
-			@m1.material.uniforms.opacity.value = 0
-		else
-			@m1.material.uniforms.opacity.value = .23
-
-		if VJ.volume > .12
-			@m2.material.uniforms.opacity.value = 0
-		else
-			@m2.material.uniforms.opacity.value = .23
+		# if VJ.volume > .12
+		# 	@m1.material.uniforms.opacity.value = 0
+		# else
+		# 	@m1.material.uniforms.opacity.value = .23
+		#
+		# if VJ.volume > .12
+		# 	@m2.material.uniforms.opacity.value = 0
+		# else
+		# 	@m2.material.uniforms.opacity.value = .23
 
 		@c1.x = VJ.volume * .4 * 4
 		@c1.z = VJ.volume * .3 * 4
@@ -487,10 +487,10 @@ class Main
 		@c4.x = VJ.volume * .4 * 4
 
 		# console.log VJ.volume
-		if VJ.volume > .21
-			@_showText()
-		else
-			@_hideText()
+		# if VJ.volume > .21
+		# 	@_showText()
+		# else
+		# 	@_hideText()
 		#
 		#
 		# if !@_isShown
