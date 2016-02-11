@@ -17,7 +17,7 @@ varying vec3 vPos;
 void main() {
 	vNormal = normal;
 	vPos = position;
-	float s = scale;
+	float s = scale*.7;
 
 	vec3 vPosition = position;
 

@@ -458,7 +458,6 @@ class Main
 			scale: {type:'f', value:0}
 			lights:		{ type: "v3v", value: @lights }
 			colors:		{ type: "v3v", value: @colors }
-			# opacity:		{ type: "f", value: .4 }
 			opacity:		{ type: "f", value: .75}
 			orientationMode: { type: "f", value: 1}
 			normalMode:		{ type: "f", value: 1}
@@ -507,8 +506,8 @@ class Main
 				# gui.add(@custom.shader.uniforms.noiseAmount,'value',0,1).name('noiseAmount').listen()
 				# gui.add(@custom.shader.uniforms.noiseSpeed,'value',0,1).name('noiseSpeed').listen()
 		@custom.shader.uniforms.invertRatio = if Math.random()<.1 then 1 else 0
-		@custom.shader.uniforms.mirrorX = if Math.random()<.1 then 1 else 0
-		# @custom.shader.uniforms.mirrorY = if Math.random()<.1 then 1 else 0
+		@custom.shader.uniforms.mirrorX = if Math.random()<.05 then 1 else 0
+		@custom.shader.uniforms.mirrorY = if Math.random()<.05 then 1 else 0
 		@custom.shader.uniforms.divide4.value = if Math.random()<.1 then 1 else 0
 		Stage3d.bouboup = if @custom.shader.uniforms.divide4.value==1 && Math.random()<.2 then 1 else 0
 		@uniformsMaterial1.normalMode.value = if Math.random()<.1 then 1 else 0
