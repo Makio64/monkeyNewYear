@@ -38,12 +38,12 @@ class Preloader
 	@onLoad:(percent)=>
 		if(percent > @percent)
 			@percent = percent
-		if(percent == 1)
-			setTimeout(()=>
-				loader = document.querySelector(".loading")
-				loader.className += ' hideOut'
-				@loaderBorder.hide(true)
-			,700)
+		# if(percent == 1)
+			# setTimeout(()=>
+			# 	loader = document.querySelector(".loading")
+			# 	loader.className += ' hideOut'
+			# 	@loaderBorder.hide(true)
+			# ,700)
 		return
 
 	document.addEventListener('DOMContentLoaded', Preloader.init)
