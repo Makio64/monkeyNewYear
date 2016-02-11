@@ -72,7 +72,7 @@ class Main
 			time: 	   { type: "f", value: 0 }
 		}
 
-		material = new THREE.ShaderMaterial( {
+		@material = new THREE.ShaderMaterial( {
 			uniforms:       @uniforms
 			vertexShader:   require('monkey.vs')
 			fragmentShader: require('monkey.fs')
@@ -84,7 +84,7 @@ class Main
 
 		loader = new THREE.JSONLoader()
 		loader.load( "obj/suzanneHi.js", ( geo, mat ) =>
-				@monkeykey = new THREE.Mesh geo, new THREE.MeshPhongMaterial( { color: 0xff00ff } )
+				@monkeykey = new THREE.Mesh( geo, @material )
 				# @monkeykey.scale.multiplyScalar( .25 )
 				Stage3d.add @monkeykey
 			)
