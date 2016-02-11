@@ -1,22 +1,5 @@
-# Starter
-My starter for experiments & profesionnal projects
+# HAPPY MONKEY NEW FUCKING YEAR
 
-## Install
+# WARNING : MONKEY CODE
 
-Install the depedencies (once in a life):
-```
-npm i browser-sync -g
-npm i jade -g
-npm i stylus -g
-npm i coffee-script -g
-npm i webpack -g
-```
-then :
-```
-npm i
-```
-## Start dev server
-npm start
-
-## Build for release
-npm run build
+Don't expect anything understandable in this fews hours dev experiment.
