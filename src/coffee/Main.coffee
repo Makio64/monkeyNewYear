@@ -22,7 +22,7 @@ class Main
 
 		# ---------------------------------------------------------------------- INIT
 
-		Stage3d.init({background:0x131011,clearAlpha:0.001})
+		Stage3d.init({background:0x131011,clearAlpha:0.9})
 		# Stage3d.initPostProcessing()
 
 		noisePass = new WAGNER.NoisePass();
@@ -117,7 +117,13 @@ class Main
 			# blending: 		THREE.AdditiveBlending
 		})
 
+
+
+
+
 		loader = new THREE.JSONLoader()
+		@materials = [@material1()]
+
 		@instancieds = []
 		loader.load( "obj/suzanneHi.js", ( geo, mat ) =>
 				@monkeykey = new THREE.Mesh( geo, @material )
@@ -166,14 +172,14 @@ class Main
 						blending: 		THREE.AdditiveBlending
 					} )
 
-					meshInstanced = new THREE.Mesh( geometry, material )
+					meshInstanced = new THREE.Mesh( geometry, @materials[0] )
 					# Stage3d.add meshInstanced
 					@instancieds.push(meshInstanced)
 					@frustumCulled = false
 
 				Stage3d.add @instancieds[Math.floor(Math.random()*@instancieds.length)]
 
-				@monkeykey = new THREE.Mesh( geo, material )
+				@monkeykey = new THREE.Mesh( geo, @materials[0] )
 				Stage3d.add @monkeykey
 
 				@uniforms2 = {
@@ -230,7 +236,7 @@ class Main
 					depthTest: true,
 					depthWrite: true
 					transparent: true,
-					# blending: THREE.AdditiveBlending
+					blending: THREE.AdditiveBlending
 				} )
 				@monkeykey = new THREE.Mesh( geo, material )
 				@monkeykey.scale.multiplyScalar( 7.5 )
@@ -287,9 +293,27 @@ class Main
 
 		# @uniforms3.opacity.value = .125 * Math.random()
 		# @uniforms4.opacity.value = .15 * Math.random()
+
 		# @analyser.getByteFrequencyData(@freqByteData)
 		# @analyser.getByteTimeDomainData(@timeByteData)
 		return
+
+	# ---------------------------------------------------------------------- MATERIAL
+	@uniforms = {
+		time: {type:'f', value:0}
+		lights:		{ type: "v3v", value: @lights }
+		colors:		{ type: "v3v", value: @colors }
+	}
+
+	material1:()->
+		return new THREE.RawShaderMaterial( {
+			vertexShader: require('monkeyInstanced.vs'),
+			fragmentShader: require('monkey.fs'),
+			uniforms: @uniforms,
+			depthTest: true,
+			depthWrite: true,
+			blending: THREE.AdditiveBlending
+		} )
 
 	onBeat:()=>
 		return
