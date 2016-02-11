@@ -318,6 +318,7 @@ class Main
 		} )
 
 	onBeat:()=>
+		Stage3d.setColorFromOption({background:0xFFFFFF*Math.random()})
 		Stage3d.control._radius = Math.random()*100+400
 		# Stage3d.control.theta = Math.random()
 		return
