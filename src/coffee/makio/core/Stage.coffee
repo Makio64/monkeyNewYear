@@ -29,7 +29,7 @@ class Stage
 			@onResize.dispatch()
 			return
 
-		@lastTime = performance.now()
+		@lastTime = Date.now()
 
 		requestAnimationFrame( @update )
 		@stat = new Stats()
@@ -40,7 +40,7 @@ class Stage
 
 	@update:()=>
 		@stat.begin()
-		t = performance.now()
+		t = Date.now()
 		dt = t - @lastTime
 		@lastTime = t
 		requestAnimationFrame( @update )
