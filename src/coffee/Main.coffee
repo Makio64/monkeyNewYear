@@ -52,11 +52,28 @@ class Main
 		@timeByteData = new Uint8Array(@binCount)
 		@waveData = new Uint8Array(@binCount)
 
-		a = document.createElement( 'audio' )
-		a.src = "audio/daddy.mp3"
-		a.loop = true
-		audioSource = @context.createMediaElementSource( a )
-		audioSource.connect( @masterGain )
+		if(!isMobile.any)
+			a = document.createElement( 'audio' )
+			a.src = "audio/daddy.mp3"
+			a.loop = true
+			audioSource = @context.createMediaElementSource( a )
+			audioSource.connect( @masterGain )
+		else
+			@request = new XMLHttpRequest()
+			@request.open( "GET", 'audio/daddy.mp3', true )
+			@request.responseType = "arraybuffer"
+			@request.onload = ()=>
+				@context.decodeAudioData( @request.response, ( buffer ) =>
+					@buffer = buffer
+					@source = @context.createBufferSource()
+					@source.loop = true
+					@source.buffer = @buffer
+					@source.connect( @masterGain )
+					@source.start( 0, 0 )
+				)
+			@request.send()
+
+
 
 		# ---------------------------------------------------------------------- TEXTURE
 
@@ -325,7 +342,7 @@ class Main
 				# material = new THREE.RawShaderMaterial( {
 				# 	vertexShader: require('monkeyInstanced.vs'),
 				# 	fragmentShader: require('monkey.fs'),
-				# 	uniforms: @uniforms3,
+				# .	uniforms: @uniforms3,
 				# 	depthTest: true,
 				# 	depthWrite: true
 				# 	transparent: true
@@ -333,8 +350,8 @@ class Main
 				# @monkeykey = new THREE.Mesh( geo, material )
 				# @monkeykey.scale.multiplyScalar( 3 )
 				# Stage3d.add @monkeykey
-
-				a.play()
+				if(!isMobile.any)
+					a.play()
 				VJ.init(@context)
 				VJ.onBeat.add(@onBeat)
 				@masterGain.connect(VJ.analyser)
