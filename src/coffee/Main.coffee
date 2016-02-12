@@ -15,7 +15,7 @@ class Main
 	# Entry point
 	constructor:(@callback)->
 
-		@callback(.5)
+		@callback(.2)
 		@animMonkey = 0
 		@_idx = 0
 
@@ -58,6 +58,7 @@ class Main
 			a.loop = true
 			audioSource = @context.createMediaElementSource( a )
 			audioSource.connect( @masterGain )
+			@callback(1)
 		else
 			if(isMobile.apple)
 				bouboup = ()=>
@@ -66,6 +67,7 @@ class Main
 					@request.responseType = "arraybuffer"
 					@request.onload = ()=>
 						@context.decodeAudioData( @request.response, ( buffer ) =>
+							@callback(1)
 							@buffer = buffer
 							@source = @context.createBufferSource()
 							@source.loop = true
@@ -88,6 +90,7 @@ class Main
 						@source.buffer = @buffer
 						@source.connect( @masterGain )
 						@source.start( 0, 0 )
+						@callback(1)
 					)
 				@request.send()
 
@@ -171,6 +174,7 @@ class Main
 		@instancieds = []
 		loader.load( "obj/suzanneHi.js", ( geo, mat ) =>
 				@monkeykeyMAIIIN = new THREE.Mesh( geo, @material )
+				@callback(.6)
 				Stage3d.add @monkeykeyMAIIIN
 
 				@container1 = new THREE.Object3D()
@@ -384,7 +388,7 @@ class Main
 		# ---------------------------------------------------------------------- STAGE EVENTS
 		Stage.onUpdate.add(@update)
 		Stage.onResize.add(@resize)
-		@callback(1)
+		@callback(.3)
 
 		@_handleText()
 

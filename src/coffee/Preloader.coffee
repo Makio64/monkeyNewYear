@@ -15,7 +15,7 @@ class Preloader
 		document.removeEventListener('DOMContentLoaded', Preloader.init)
 		l = document.createElement('div')
 		l.className = 'loading'
-		document.body.appendChild(l)
+		# document.body.appendChild(l)
 		@loaderBorder = new BorderLoader()
 		@loaderBorder.setPercent(0)
 
