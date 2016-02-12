@@ -59,19 +59,38 @@ class Main
 			audioSource = @context.createMediaElementSource( a )
 			audioSource.connect( @masterGain )
 		else
-			@request = new XMLHttpRequest()
-			@request.open( "GET", 'audio/daddy.mp3', true )
-			@request.responseType = "arraybuffer"
-			@request.onload = ()=>
-				@context.decodeAudioData( @request.response, ( buffer ) =>
-					@buffer = buffer
-					@source = @context.createBufferSource()
-					@source.loop = true
-					@source.buffer = @buffer
-					@source.connect( @masterGain )
-					@source.start( 0, 0 )
-				)
-			@request.send()
+			if(isMobile.apple)
+				bouboup = ()=>
+					@request = new XMLHttpRequest()
+					@request.open( "GET", 'audio/daddy.mp3', true )
+					@request.responseType = "arraybuffer"
+					@request.onload = ()=>
+						@context.decodeAudioData( @request.response, ( buffer ) =>
+							@buffer = buffer
+							@source = @context.createBufferSource()
+							@source.loop = true
+							@source.buffer = @buffer
+							@source.connect( @masterGain )
+							@source.start( 0, 0 )
+						)
+					@request.send()
+					document.body.removeEventListener('click',bouboup)
+				document.body.addEventListener('click',bouboup)
+			else
+				@request = new XMLHttpRequest()
+				@request.open( "GET", 'audio/daddy.mp3', true )
+				@request.responseType = "arraybuffer"
+				@request.onload = ()=>
+					@context.decodeAudioData( @request.response, ( buffer ) =>
+						@buffer = buffer
+						@source = @context.createBufferSource()
+						@source.loop = true
+						@source.buffer = @buffer
+						@source.connect( @masterGain )
+						@source.start( 0, 0 )
+					)
+				@request.send()
+
 
 
 
