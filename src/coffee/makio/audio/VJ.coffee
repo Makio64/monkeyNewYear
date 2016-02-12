@@ -66,7 +66,7 @@ class VJ
 
 
 	@update=(dt)=>
-		if(@analyser == null)
+		if(!@analyser)
 			return
 
 		# beatTime += dt

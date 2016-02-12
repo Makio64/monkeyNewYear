@@ -36,6 +36,7 @@ class Main
 		# ---------------------------------------------------------------------- SOUND
 
 		@time = 0
+		window.AudioContext = window.AudioContext || window.webkitAudioContext
 		@context = new AudioContext()
 		@masterGain = @context.createGain()
 		@masterGain.gain.value = .1
@@ -441,6 +442,7 @@ class Main
 
 	update:(dt)=>
 		VJ.update(dt)
+		if(!VJ.analyser) then return
 		# @uniformsGrid.time.value+=dt/1000
 		@uniformsMaterial1.scale.value = VJ.volume*@globalScale
 		@uniformsMaterial1.scale.value = VJ.volume*@globalScale
