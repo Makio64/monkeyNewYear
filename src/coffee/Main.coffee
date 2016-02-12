@@ -272,8 +272,8 @@ class Main
 				g.fromGeometry( geo )
 				geometry.copy( g )
 
-				width = 9
-				height = 9
+				width = 6
+				height = 6
 				particleCount = width*height
 				translates = new Float32Array( particleCount * 3 )
 				timeArray = new Float32Array( particleCount )
@@ -284,8 +284,8 @@ class Main
 						i3 = (x+y*width)*3
 						# UNIFORMS & ATTRIBUTES
 						timeArray[i] =  Math.random()*1023
-						translates[ i3 + 0 ] = (x-width/2)*100
-						translates[ i3 + 1 ] = (y-height/2)*100
+						translates[ i3 + 0 ] = (x-width/2)*150
+						translates[ i3 + 1 ] = (y-height/2)*150
 						translates[ i3 + 2 ] = 100
 						vector.set( (Math.random() * 2 - 1), (Math.random() * 2 - 1), (Math.random() * 2 - 1), 1 );
 						vector.normalize();
