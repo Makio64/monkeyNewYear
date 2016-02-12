@@ -36,6 +36,7 @@ class Main
 		# ---------------------------------------------------------------------- SOUND
 
 		@time = 0
+		window.AudioContext = window.AudioContext || window.webkitAudioContext
 		@context = new AudioContext()
 		@masterGain = @context.createGain()
 		@masterGain.gain.value = .1
